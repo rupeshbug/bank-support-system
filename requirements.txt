@@ -5,9 +5,7 @@ torch
 streamlit
 scikit-learn
 sentencepiece
-pydub
 pyttsx3
 SpeechRecognition
-PyAudio
 gTTS
 playsound==1.2.2
