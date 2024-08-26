@@ -9,7 +9,7 @@ from transformers import T5Tokenizer, T5ForConditionalGeneration
 model = T5ForConditionalGeneration.from_pretrained("./t5-main-chatbot-model")
 tokenizer = T5Tokenizer.from_pretrained("./t5-main-chatbot-model")
 
-# Streamlit app setup
+# setup
 st.title("Customer Support System")
 
 if "messages" not in st.session_state:
@@ -23,7 +23,8 @@ def speak(text):
     tts = gTTS(text)
     tts.save("response.mp3")
     playsound("response.mp3")
-    os.remove("response.mp3")  # Clean up the file after playing
+    # delete the file after playing
+    os.remove("response.mp3")
 
 def generate_response(text):
     """Generate response based on the user input."""
@@ -41,7 +42,7 @@ def listen_and_respond():
     """Listen for audio input, generate a response, and speak it out."""
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
-        listening_message = st.info("Listening...")  # Show the spinner and listening text
+        listening_message = st.info("Listening...")
         audio = recognizer.listen(source)
     
     try:
@@ -51,7 +52,6 @@ def listen_and_respond():
     except sr.RequestError:
         user_input = "Sorry, I'm having trouble with my speech recognition service."
     
-    # Remove the "Listening..." message
     listening_message.empty()
 
     # Display user message
@@ -77,7 +77,6 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"], unsafe_allow_html=True)
 
-# Ensure the "Speak" button is not responsive while processing audio
 if not st.session_state.audio_processing:
     # Handle text input
     if prompt := st.chat_input("Type your question:"):
